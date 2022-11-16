@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/conduit/static/css/main.054ce07f.css",
+    "main.js": "/conduit/static/js/main.8966241c.js",
+    "index.html": "/conduit/index.html",
+    "main.054ce07f.css.map": "/conduit/static/css/main.054ce07f.css.map",
+    "main.8966241c.js.map": "/conduit/static/js/main.8966241c.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.054ce07f.css",
+    "static/js/main.8966241c.js"
+  ]
+}
