@@ -1,13 +1,13 @@
 {
   "files": {
     "main.css": "/conduit/static/css/main.054ce07f.css",
-    "main.js": "/conduit/static/js/main.8966241c.js",
+    "main.js": "/conduit/static/js/main.3cf2b53f.js",
     "index.html": "/conduit/index.html",
     "main.054ce07f.css.map": "/conduit/static/css/main.054ce07f.css.map",
-    "main.8966241c.js.map": "/conduit/static/js/main.8966241c.js.map"
+    "main.3cf2b53f.js.map": "/conduit/static/js/main.3cf2b53f.js.map"
   },
   "entrypoints": [
     "static/css/main.054ce07f.css",
-    "static/js/main.8966241c.js"
+    "static/js/main.3cf2b53f.js"
   ]
 }
