@@ -14,10 +14,10 @@ const App = () => {
     <>
       <CurrentUserProvider>
         <UserChecker>
-          <BrowserRouter>
+          <HashRouter>
             <TopBar />
             <Rout />
-          </BrowserRouter>
+          </HashRouter>
         </UserChecker>
       </CurrentUserProvider>
     </>

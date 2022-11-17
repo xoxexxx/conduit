@@ -3,11 +3,14 @@ import { useContext, Fragment } from "react";
 import { CurrentUserContext } from "../context/currentUser";
 import { Icon24WriteOutline } from "@vkontakte/icons";
 import { Icon24Settings } from "@vkontakte/icons";
+import useLocalStorage from "../hooks/useLocalStorage";
 export const TopBar = () => {
   const [userState, setUserState] = useContext(CurrentUserContext);
+  const [token, setToken] = useLocalStorage("token");
   const exit = () => {
     userState.isLoggedIn = false;
     setUserState({ ...userState, isLoggedIn: false });
+    localStorage.clear()
   };
   return (
     <>

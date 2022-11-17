@@ -2,10 +2,9 @@ import { useEffect, useState, useContext } from "react";
 import { Link, NavLink } from "react-router-dom";
 import { Icon16Like } from "@vkontakte/icons";
 import { CurrentUserContext } from "../../context/currentUser";
-import useLocalStorage from "../../hooks/useLocalStorage";
-import classNames from "classnames";
+import { PopularTags } from "../../components/popularTags";
 import axios from "axios";
-const GlobalFeed = () => {
+const TagFeed = () => {
   const [articles, setArticles] = useState([]);
   const [count, setCount] = useState(0);
   const [offset, setOffset] = useState(0);
@@ -20,11 +19,13 @@ const GlobalFeed = () => {
   const offsetHandle = (e) => {
     setOffset(e.target.innerText + "0");
   };
+  
+  let loc = document.location.hash.split('/').reverse()
 
   useEffect(() => {
     setUserState({ ...userState, isLoading: true });
     document.title = "CONDUIT";
-    axios(`https://api.realworld.io/api/articles?limit=10&offset=${offset}`, {
+    axios(`https://api.realworld.io/api/articles?tag=${loc[0]}&limit=10&offset=${offset}`, {
       method: "GET",
     }).then((res) => {
       setArticles(res.data.articles);
@@ -32,9 +33,11 @@ const GlobalFeed = () => {
       setUserState({ ...userState, isLoading: false });
     });
   }, [offset]);
-
+  
   return (
     <div className="GlobalFeed">
+        <PopularTags />
+        <h3>#{loc[0]}</h3>
       {userState.isLoading && <div className="isLoading"></div>}
       {articles.map((x, index) => (
         <div className="feed" key={index}>
@@ -80,4 +83,4 @@ const GlobalFeed = () => {
   );
 };
 
-export default GlobalFeed;
+export default TagFeed;

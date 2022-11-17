@@ -317,6 +317,7 @@ code {
   border: 1px solid rgba(0, 0, 0, 0.5);
   border-radius: 10px;
   font-size: 12px;
+  transition-duration: 0.5s;
 }
 .tags span {
   margin-top: 10px;
@@ -374,8 +375,31 @@ code {
   color: rgba(0, 0, 0, 0.7);
   padding: 10px;
 }
+.Feeds ul li a {
+  color: rgba(0, 0, 0, 0.7);
+}
 
 .f-active {
   color:rgb(20, 100, 0) !important;
   border-bottom: 2px solid rgb(20, 100, 0);
+}
+.popular-tags {text-align: center; font-size: 24px; color: rgba(0, 0, 0, 0.8); margin-top: 30px;}
+.shadowTags {
+  max-width: 600px;
+  margin: 0 auto;
+  cursor: pointer;
+}
+.shadowTags ul li:hover {
+  color: white;
+  background-color: rgba(0, 0, 0, 0.8);
+}
+.shadowTags ul li a {
+  color: rgba(0, 0, 0, 0.8);
+}
+.shadowTags ul li a:hover {
+  color: white;
+}
+h3 {
+  text-align: center;
+  color: rgba(0, 0, 0, 0.76);
 }
