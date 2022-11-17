@@ -1,15 +1,20 @@
 import { useEffect, useState, useContext } from "react";
-import { Link, NavLink } from "react-router-dom";
-import { Icon16Like } from "@vkontakte/icons";
+import { Link, useParams } from "react-router-dom";
+
 import { CurrentUserContext } from "../../context/currentUser";
-import useLocalStorage from "../../hooks/useLocalStorage";
-import classNames from "classnames";
+import { Error } from "../../components/error";
+
+import { Icon16Like } from "@vkontakte/icons";
+
 import axios from "axios";
+
 const GlobalFeed = () => {
   const [articles, setArticles] = useState([]);
   const [count, setCount] = useState(0);
   const [offset, setOffset] = useState(0);
-  const [userState, setUserState] = useContext(CurrentUserContext);
+  const [currentUser, setCurrentUser] = useContext(CurrentUserContext);
+
+  const [currentPage, setCurrentPage] = useState(0)
   
   const limit = Math.ceil(count / 10);
   let pagination = [];
@@ -19,23 +24,32 @@ const GlobalFeed = () => {
 
   const offsetHandle = (e) => {
     setOffset(e.target.innerText + "0");
+    setCurrentPage(+e.target.innerText)
+    
   };
 
   useEffect(() => {
-    setUserState({ ...userState, isLoading: true });
+    setCurrentUser({ ...currentUser, isLoading: true, isError: false });
     document.title = "CONDUIT";
     axios(`https://api.realworld.io/api/articles?limit=10&offset=${offset}`, {
       method: "GET",
     }).then((res) => {
       setArticles(res.data.articles);
       setCount(res.data.articlesCount);
-      setUserState({ ...userState, isLoading: false });
-    });
+      setCurrentUser({ ...currentUser, isLoading: false, isError: false });
+    }).catch(err => {
+      setCurrentUser({
+        ...currentUser,
+        isError: true
+      })
+    })
   }, [offset]);
 
   return (
+    
     <div className="GlobalFeed">
-      {userState.isLoading && <div className="isLoading"></div>}
+      {currentUser.isError && <Error />}
+      {currentUser.isLoading && <div className="isLoading"></div>}
       {articles.map((x, index) => (
         <div className="feed" key={index}>
           <div className="user">
@@ -69,7 +83,7 @@ const GlobalFeed = () => {
       ))}
       <ul className="pagination">
         {pagination.map((p, i) => (
-          <li key={i}>
+          <li key={i} className={i === currentPage && `activePag`}>
             <Link className="pag" onClick={offsetHandle}>
               {p}
             </Link>

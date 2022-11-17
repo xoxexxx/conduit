@@ -1,6 +1,6 @@
 import { useEffect, useState, useContext } from "react";
 import { Link, Navigate } from "react-router-dom";
-import useLocalStorage from "../hooks/useLocalStorage";
+
 import { CurrentUserContext } from "../context/currentUser";
 import { BackendErrorMessages } from "./backendErrorMessages";
 
@@ -13,8 +13,8 @@ export const Auth = (props) => {
   const [response, setResponse] = useState(null);
   const [succsess, setSuccsess] = useState(false);
   const [error, setError] = useState(null)
-  const [token, setToken] = useLocalStorage("token");
-  const [currentUser, setCurrentUser] = useContext(CurrentUserContext)
+
+  const [,setCurrentUser] = useContext(CurrentUserContext)
 
   const handleSubmit = (event) => {
     event.preventDefault();

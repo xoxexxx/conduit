@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import {Routes, Route} from 'react-router-dom';
-import { useContext } from 'react';
+
 import Article from './pages/article';
 import {Feed} from './pages/feed';
 import { Editor } from './pages/article/editor';
@@ -9,19 +9,20 @@ import {Auth} from './pages/auth';
 import { CurrentUserContext } from './context/currentUser';
 import { Profile } from './pages/article/profile';
 import { Registration } from './pages/registration';
-import TagFeed  from './pages/feed/tagFeed';
+
+
+
 export default () => {
-    const [userState, setUserState] = useContext(CurrentUserContext);
+    const [currentUser, setCurrentUser] = useContext(CurrentUserContext);
     let username
-    if (userState.currentUser !== null) {
-         username = userState.currentUser.username
+    if (currentUser.currentUser !== null) {
+         username = currentUser.currentUser.username
     }
     return(
         <Routes>
             <Route path='/' element={<Feed />}  />
             <Route path='/login' element={<Auth />} />
-            <Route path='/register' element={<Registration />} />
-            <Route path='/tags/:slug' element={<TagFeed />} />
+            <Route path='/register' element={<Registration />} />       
             <Route path='/editor' element={<Editor />} />
             <Route path={`/profile/${username}`} element={<Profile />}/>
             <Route path='/settings' element={<Settings />} />

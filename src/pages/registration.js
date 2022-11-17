@@ -1,8 +1,10 @@
 import { Link, Navigate } from "react-router-dom";
 import { useState, useEffect, useContext} from "react";
+
 import { CurrentUserContext } from "../context/currentUser";
 import { BackendErrorMessages } from "./backendErrorMessages";
 import useLocalStorage from "../hooks/useLocalStorage";
+
 import axios from "axios";
 
 export const Registration = () => {
@@ -12,9 +14,7 @@ export const Registration = () => {
   const [succsess, setSuccsess] = useState(false);
   const [response, setResponse] = useState(null);
   const [error, setError] = useState(null)
-  const [token, setToken] = useLocalStorage("token");
   const [currentUser, setCurrentUser] = useContext(CurrentUserContext)
-
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -43,7 +43,6 @@ export const Registration = () => {
       })
       .catch((err) => {
         setSumbit(false);
-        
         setError(err.response.data)
       });
   });

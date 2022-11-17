@@ -1,6 +1,8 @@
 import { useContext, useEffect, useState } from "react";
+
 import useLocalStorage from "../hooks/useLocalStorage";
 import { CurrentUserContext } from "../context/currentUser";
+
 import axios from "axios";
 
 export const UserChecker = ({ children }) => {
@@ -9,6 +11,7 @@ export const UserChecker = ({ children }) => {
   const [currentUser, setCurrentUser] = useContext(CurrentUserContext);
 
   useEffect(() => {
+    
     if (!token) {
       setCurrentUser((state) => ({
         ...state,
@@ -27,11 +30,15 @@ export const UserChecker = ({ children }) => {
         setResponse(res.data);
         setCurrentUser((state) => ({
           ...state,
-          isLoading: true
+          isLoading: true,
+          isError: false
         }))
       })
       .catch((err) => {
-
+          setCurrentUser({
+            ...currentUser,
+            isError: true
+          })
       });
   }, [token]);
 

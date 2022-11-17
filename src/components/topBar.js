@@ -1,17 +1,24 @@
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink, Navigate} from "react-router-dom";
 import { useContext, Fragment } from "react";
+import { useNavigate } from 'react-router-dom';
 import { CurrentUserContext } from "../context/currentUser";
+
 import { Icon24WriteOutline } from "@vkontakte/icons";
 import { Icon24Settings } from "@vkontakte/icons";
-import useLocalStorage from "../hooks/useLocalStorage";
+
 export const TopBar = () => {
-  const [userState, setUserState] = useContext(CurrentUserContext);
-  const [token, setToken] = useLocalStorage("token");
+  const [currentUser, setCurrentUser] = useContext(CurrentUserContext);
+
+  let navigate = useNavigate();
+
+  
   const exit = () => {
-    userState.isLoggedIn = false;
-    setUserState({ ...userState, isLoggedIn: false });
+    setCurrentUser({ ...currentUser, isLoggedIn: false });
     localStorage.clear()
+    navigate('/');
+    
   };
+  
   return (
     <>
       <nav className="nav-bar">
@@ -23,7 +30,7 @@ export const TopBar = () => {
             <li className="nav">
               <NavLink to="/">Home</NavLink>
             </li>
-            {userState.isLoggedIn === false && (
+            {currentUser.isLoggedIn === false && (
               <Fragment>
                 <li className="nav">
                   <NavLink to="/login">Sign in</NavLink>
@@ -33,7 +40,7 @@ export const TopBar = () => {
                 </li>
               </Fragment>
             )}
-            {userState.isLoggedIn && (
+            {currentUser.isLoggedIn && (
               <Fragment>
                 <li className="nav">
                   <NavLink to="/editor">
@@ -48,8 +55,8 @@ export const TopBar = () => {
                 </li>
                 <li className="nav">
                   <NavLink
-                    to={`/profile/${userState.currentUser.username}`}
-                  ><img src={userState.currentUser.image} /> {userState.currentUser.username}</NavLink>
+                    to={`/profile/${currentUser.currentUser.username}`}
+                  ><img src={currentUser.currentUser.image} /> {currentUser.currentUser.username}</NavLink>
                 </li>
                 <li onClick={exit} className="nav-exit">
                   EXIT

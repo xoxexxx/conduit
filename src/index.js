@@ -1,13 +1,15 @@
 import React from "react";
-import { BrowserRouter, HashRouter } from "react-router-dom";
+import { HashRouter } from "react-router-dom";
 import ReactDOM from "react-dom/client";
-import { useState } from "react";
+
 import Rout from "./Rout";
 import { TopBar } from "./components/topBar";
 import { CurrentUserProvider } from "./context/currentUser";
 import { UserChecker } from "./components/userChecker";
+import { FooterBar } from "./components/footerBar";
 
 import "./index.css";
+
 
 const App = () => {
   return (
@@ -17,6 +19,7 @@ const App = () => {
           <HashRouter>
             <TopBar />
             <Rout />
+            <FooterBar />
           </HashRouter>
         </UserChecker>
       </CurrentUserProvider>

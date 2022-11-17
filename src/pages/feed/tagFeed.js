@@ -1,15 +1,19 @@
 import { useEffect, useState, useContext } from "react";
-import { Link, NavLink } from "react-router-dom";
+import { Link } from "react-router-dom";
+
 import { Icon16Like } from "@vkontakte/icons";
 import { CurrentUserContext } from "../../context/currentUser";
-import { PopularTags } from "../../components/popularTags";
+import { Error } from "../../components/error";
+
 import axios from "axios";
+
 const TagFeed = () => {
   const [articles, setArticles] = useState([]);
   const [count, setCount] = useState(0);
   const [offset, setOffset] = useState(0);
-  const [userState, setUserState] = useContext(CurrentUserContext);
-  
+  const [currentUser, setCurrentUser] = useContext(CurrentUserContext);
+  const [currentPage, setCurrentPage] = useState(0)
+
   const limit = Math.ceil(count / 10);
   let pagination = [];
   for (let i = 0; i < limit; i++) {
@@ -18,27 +22,27 @@ const TagFeed = () => {
 
   const offsetHandle = (e) => {
     setOffset(e.target.innerText + "0");
+    setCurrentPage(+e.target.innerText)
   };
   
-  let loc = document.location.hash.split('/').reverse()
-
   useEffect(() => {
-    setUserState({ ...userState, isLoading: true });
+    setCurrentUser({ ...currentUser, isLoading: true });
     document.title = "CONDUIT";
-    axios(`https://api.realworld.io/api/articles?tag=${loc[0]}&limit=10&offset=${offset}`, {
+    axios(`https://api.realworld.io/api/articles?tag=${currentUser.tags}&limit=10&offset=${offset}`, {
       method: "GET",
     }).then((res) => {
       setArticles(res.data.articles);
       setCount(res.data.articlesCount);
-      setUserState({ ...userState, isLoading: false });
-    });
-  }, [offset]);
+      setCurrentUser({ ...currentUser, isLoading: false, isError: false });
+    }).catch(err => {
+      setCurrentUser({ ...currentUser, isError: true });
+    })
+  }, [currentUser.tags, offset]);
   
   return (
     <div className="GlobalFeed">
-        <PopularTags />
-        <h3>#{loc[0]}</h3>
-      {userState.isLoading && <div className="isLoading"></div>}
+      {currentUser.isError && <Error />}
+      {currentUser.isLoading && <div className="isLoading"></div>}
       {articles.map((x, index) => (
         <div className="feed" key={index}>
           <div className="user">
@@ -72,7 +76,7 @@ const TagFeed = () => {
       ))}
       <ul className="pagination">
         {pagination.map((p, i) => (
-          <li key={i}>
+          <li key={i} className={i === currentPage && `activePag`}>
             <Link className="pag" onClick={offsetHandle}>
               {p}
             </Link>

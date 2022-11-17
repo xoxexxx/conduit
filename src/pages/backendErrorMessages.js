@@ -1,5 +1,3 @@
-
-
 export const BackendErrorMessages = ({backendErrors}) => {
     const err = Object.keys(backendErrors).map(name => {
         const messages = backendErrors[name].join(' ')
