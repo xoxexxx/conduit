@@ -31,7 +31,8 @@ export const UserChecker = ({ children }) => {
         setCurrentUser((state) => ({
           ...state,
           isLoading: true,
-          isError: false
+          isError: false,
+          isLoggedIn: true
         }))
       })
       .catch((err) => {

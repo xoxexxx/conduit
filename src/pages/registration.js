@@ -4,6 +4,7 @@ import { useState, useEffect, useContext} from "react";
 import { CurrentUserContext } from "../context/currentUser";
 import { BackendErrorMessages } from "./backendErrorMessages";
 import useLocalStorage from "../hooks/useLocalStorage";
+import { useNavigate } from 'react-router-dom';
 
 import axios from "axios";
 
@@ -15,7 +16,8 @@ export const Registration = () => {
   const [response, setResponse] = useState(null);
   const [error, setError] = useState(null)
   const [currentUser, setCurrentUser] = useContext(CurrentUserContext)
-
+  const [token, setToken] = useLocalStorage("token");
+  let navigate = useNavigate();
   const handleSubmit = (event) => {
     event.preventDefault();
     setSumbit(true);
@@ -39,22 +41,27 @@ export const Registration = () => {
       .then((res) => {
         setSumbit(false);
         setResponse(res.data);
-        setCurrentUser({...currentUser, isLoggedIn: true})
+        setCurrentUser({...currentUser, isLoggedIn: true, currentUser: res.data.user})
+        setToken(localStorage.setItem("token", response.user.token))
+        navigate('/')
+        
+        
       })
       .catch((err) => {
         setSumbit(false);
         setError(err.response.data)
       });
   });
+  
   useEffect(() => {
     if (!response) return;
     localStorage.setItem("token", response.user.token);
     setSuccsess(true);
   }, [response]);
+  
   if (succsess) {
     return <Navigate to="/" />;
   }
-
   
   return (
     <>

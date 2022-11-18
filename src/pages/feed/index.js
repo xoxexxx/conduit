@@ -7,12 +7,13 @@ import { YourFeed } from "./yourFeed";
 import { CurrentUserContext } from "../../context/currentUser";
 import { PopularTags } from "../../components/popularTags";
 import TagFeed from './tagFeed'
-
+import useLocalStorage from "../../hooks/useLocalStorage";
 
 export const Feed = () => {
 
   const [feed, setFeed] = useState({yourz: false, globalz: true, tag: false});
-  const [currentUser] = useContext(CurrentUserContext);
+  const [currentUser, setCurrentUser] = useContext(CurrentUserContext);
+  const [token] = useLocalStorage("token");
 
   const yourFeedHandler = () => {
     setFeed({...feed, yourz: true, globalz: false, tag: false})
@@ -24,7 +25,6 @@ export const Feed = () => {
     setFeed({...feed, yourz: false, globalz: false, tag: true})
     
   }
-
   return(
     <>
     

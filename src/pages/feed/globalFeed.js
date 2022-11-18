@@ -3,27 +3,27 @@ import { Link, useParams } from "react-router-dom";
 
 import { CurrentUserContext } from "../../context/currentUser";
 import { Error } from "../../components/error";
-
-import { Icon16Like } from "@vkontakte/icons";
+import useLocalStorage from "../../hooks/useLocalStorage";
 
 import axios from "axios";
+import { Liked } from "../../components/liked";
 
 const GlobalFeed = () => {
   const [articles, setArticles] = useState([]);
   const [count, setCount] = useState(0);
   const [offset, setOffset] = useState(0);
   const [currentUser, setCurrentUser] = useContext(CurrentUserContext);
+  const [token] = useLocalStorage("token");
+  const [currentPage, setCurrentPage] = useState(1)
 
-  const [currentPage, setCurrentPage] = useState(0)
-  
   const limit = Math.ceil(count / 10);
   let pagination = [];
-  for (let i = 0; i < limit; i++) {
+  for (let i = 1; i <= limit; i++) {
     pagination.push(i);
   }
 
   const offsetHandle = (e) => {
-    setOffset(e.target.innerText + "0");
+    setOffset(+e.target.innerText - 1 + "0");
     setCurrentPage(+e.target.innerText)
     
   };
@@ -33,18 +33,20 @@ const GlobalFeed = () => {
     document.title = "CONDUIT";
     axios(`https://api.realworld.io/api/articles?limit=10&offset=${offset}`, {
       method: "GET",
+      headers: {
+        Authorization: token ? `Token ${token}` : "",
+      },
     }).then((res) => {
       setArticles(res.data.articles);
       setCount(res.data.articlesCount);
-      setCurrentUser({ ...currentUser, isLoading: false, isError: false });
+      setCurrentUser({ ...currentUser, isLoading: false, isError: false});
     }).catch(err => {
       setCurrentUser({
         ...currentUser,
-        isError: true
       })
     })
   }, [offset]);
-
+  
   return (
     
     <div className="GlobalFeed">
@@ -60,8 +62,8 @@ const GlobalFeed = () => {
                 <p className="data">{x.createdAt}</p>
               </div>
             </div>
-            <div className="like" >
-              <Icon16Like /> <span>{x.favoritesCount}</span>
+            <div>
+            <Liked favoriteCount={x.favoritesCount} slug={x.slug} isFavorited={x.favorited} />
             </div>
           </div>
           <div className="title">
@@ -83,7 +85,7 @@ const GlobalFeed = () => {
       ))}
       <ul className="pagination">
         {pagination.map((p, i) => (
-          <li key={i} className={i === currentPage && `activePag`}>
+          <li key={i} className={i + 1 === currentPage && `activePag`}>
             <Link className="pag" onClick={offsetHandle}>
               {p}
             </Link>

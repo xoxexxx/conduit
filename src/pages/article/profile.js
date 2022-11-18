@@ -8,7 +8,7 @@ import { Icon24Settings } from "@vkontakte/icons";
 export const Profile = () => {
     
     const [currentUser, setCurrentUser] = useContext(CurrentUserContext);
-
+    console.log(currentUser)
     return(
         <div className="profile-block">
             <div className='profile'>

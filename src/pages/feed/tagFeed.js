@@ -1,9 +1,10 @@
 import { useEffect, useState, useContext } from "react";
 import { Link } from "react-router-dom";
 
-import { Icon16Like } from "@vkontakte/icons";
 import { CurrentUserContext } from "../../context/currentUser";
 import { Error } from "../../components/error";
+import { Liked } from "../../components/liked";
+import useLocalStorage from "../../hooks/useLocalStorage";
 
 import axios from "axios";
 
@@ -11,6 +12,7 @@ const TagFeed = () => {
   const [articles, setArticles] = useState([]);
   const [count, setCount] = useState(0);
   const [offset, setOffset] = useState(0);
+  const [token] = useLocalStorage("token");
   const [currentUser, setCurrentUser] = useContext(CurrentUserContext);
   const [currentPage, setCurrentPage] = useState(0)
 
@@ -30,6 +32,9 @@ const TagFeed = () => {
     document.title = "CONDUIT";
     axios(`https://api.realworld.io/api/articles?tag=${currentUser.tags}&limit=10&offset=${offset}`, {
       method: "GET",
+      headers: {
+        Authorization: token ? `Token ${token}` : "",
+      },
     }).then((res) => {
       setArticles(res.data.articles);
       setCount(res.data.articlesCount);
@@ -38,6 +43,7 @@ const TagFeed = () => {
       setCurrentUser({ ...currentUser, isError: true });
     })
   }, [currentUser.tags, offset]);
+  
   
   return (
     <div className="GlobalFeed">
@@ -53,8 +59,8 @@ const TagFeed = () => {
                 <p className="data">{x.createdAt}</p>
               </div>
             </div>
-            <div className="like" >
-              <Icon16Like /> <span>{x.favoritesCount}</span>
+            <div>
+              <Liked favoriteCount={x.favoritesCount} slug={x.slug} isFavorited={x.favorited} />
             </div>
           </div>
           <div className="title">

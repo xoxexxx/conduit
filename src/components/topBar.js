@@ -14,9 +14,9 @@ export const TopBar = () => {
   
   const exit = () => {
     setCurrentUser({ ...currentUser, isLoggedIn: false });
-    localStorage.clear()
     navigate('/');
-    
+    window.location.reload()
+    console.log('exit')
   };
   
   return (
@@ -55,8 +55,8 @@ export const TopBar = () => {
                 </li>
                 <li className="nav">
                   <NavLink
-                    to={`/profile/${currentUser.currentUser.username}`}
-                  ><img src={currentUser.currentUser.image} /> {currentUser.currentUser.username}</NavLink>
+                    to={`/profile/${currentUser.currentUser?.username}`}
+                  ><img src={currentUser.currentUser?.image} /> {currentUser.currentUser?.username}</NavLink>
                 </li>
                 <li onClick={exit} className="nav-exit">
                   EXIT

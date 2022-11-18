@@ -17,7 +17,7 @@ a {
 }
 nav {
   background-color: rgb(30, 150, 0);
-  border-bottom-right-radius: 30%;
+  border-bottom-right-radius: 25%;
   border-bottom-left-radius: 15%;
   box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.3);
   position: relative;
@@ -286,19 +286,24 @@ code {
 }
 .like {
   display: flex;
-  padding: 8px 5px 0 5px;
+  padding: 8px 8px 3px 8px;
   border: 1px solid rgb(20, 100, 0);
   border-radius: 10px;
   color:rgb(20, 100, 0);
   cursor: pointer;
   transition-duration: 0.8s;
 }
-.like span {
-  margin-left: 5px;
+.favorite {
+  color: white;
+  background-color: rgb(20, 100, 0);
+}
+.favorite:hover {
+  color:rgb(20, 100, 0) !important;
+  background-color: white !important;
 }
 .like:hover {
   color: white;
-  background-color: rgb(20, 100, 0);;
+  background-color: rgb(20, 100, 0);
 }
 .title a h2 {
   margin-bottom: 0;
@@ -460,7 +465,7 @@ h3 {
   margin-top: 20px;
 }
 .Icon {
-  margin: 0 10px 0 0 !important;
+  margin: 0 5px 0 0 !important;
   padding: 0 !important;
 }
 .footer div span a {
