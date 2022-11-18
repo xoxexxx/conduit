@@ -14,7 +14,7 @@ const GlobalFeed = () => {
   const [offset, setOffset] = useState(0);
   const [currentUser, setCurrentUser] = useContext(CurrentUserContext);
   const [token] = useLocalStorage("token");
-  const [currentPage, setCurrentPage] = useState(1)
+  const [currentPage, setCurrentPage] = useState(1);
 
   const limit = Math.ceil(count / 10);
   let pagination = [];
@@ -24,8 +24,7 @@ const GlobalFeed = () => {
 
   const offsetHandle = (e) => {
     setOffset(+e.target.innerText - 1 + "0");
-    setCurrentPage(+e.target.innerText)
-    
+    setCurrentPage(+e.target.innerText);
   };
 
   useEffect(() => {
@@ -36,20 +35,26 @@ const GlobalFeed = () => {
       headers: {
         Authorization: token ? `Token ${token}` : "",
       },
-    }).then((res) => {
-      setArticles(res.data.articles);
-      setCount(res.data.articlesCount);
-      setCurrentUser({ ...currentUser, isLoading: false, isError: false, method: null});
-      setOffset(offset)
-    }).catch(err => {
-      setCurrentUser({
-        ...currentUser,
-      })
     })
+      .then((res) => {
+        setArticles(res.data.articles);
+        setCount(res.data.articlesCount);
+        setCurrentUser({
+          ...currentUser,
+          isLoading: false,
+          isError: false,
+          method: null,
+        });
+        setOffset(offset);
+      })
+      .catch((err) => {
+        setCurrentUser({
+          ...currentUser,
+        });
+      });
   }, [offset]);
-  
+
   return (
-    
     <div className="GlobalFeed">
       {currentUser.isError && <Error />}
       {currentUser.isLoading && <div className="isLoading"></div>}
@@ -64,7 +69,7 @@ const GlobalFeed = () => {
               </div>
             </div>
             <div>
-            <Liked x={x} />
+              <Liked x={x}  />
             </div>
           </div>
           <div className="title">

@@ -11,9 +11,14 @@ export const Liked = ({ x }) => {
     isLikeCount: "",
     isActive: "",
     method: "",
+    
   });
   const handleLike = () => {
-    setResponse({ ...response, xz: false });
+      setResponse({ ...response, xz: false});
+
+      setTimeout(() => {
+        window.location.reload()
+      }, 1000)
   };
 
   useEffect(() => {
@@ -29,22 +34,23 @@ export const Liked = ({ x }) => {
         xz: true,
         isLikeCount: res.data.article.favoritesCount,
         isActive: res.data.article.favorited,
-        
       });
       setCurrentUser({...currentUser, method: res.config.method})
+      
     });
+    
   }, [response]);
 
   return (
     <div
-      className={`like ${response.isActive && `favorite`} ${
+      className={`like ${
         x.favorited && `favorite`
-      } ${response.method == "delete" && "delete"} `}
+      } `}
       onClick={handleLike}
     >
       <Icon16Like />{" "}
       <span>
-        {currentUser.method == "post" ? x.favoritesCount + 1 : x.favoritesCount}
+        {x.favoritesCount}
       </span>
     </div>
   );

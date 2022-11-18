@@ -60,7 +60,7 @@ const TagFeed = () => {
               </div>
             </div>
             <div>
-              <Liked favoriteCount={x.favoritesCount} slug={x.slug} isFavorited={x.favorited} />
+              <Liked x={x} />
             </div>
           </div>
           <div className="title">
