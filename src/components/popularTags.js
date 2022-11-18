@@ -1,3 +1,5 @@
+import github from '../github_PNG50.png'
+
 import axios from "axios";
 
 import { useEffect, useState, useContext } from "react";
@@ -35,6 +37,7 @@ export const PopularTags = ({setFeed, feed}) => {
     {currentUser.isError && <Error />}
       <h2 className="popular-tags">Popular Tags</h2>
       <div className="tags shadowTags">
+        
         <ul>
           {tags.map((x) => (
             <li key={x} onClick={tagsHandler}>
@@ -42,6 +45,10 @@ export const PopularTags = ({setFeed, feed}) => {
             </li>
           ))}
         </ul>
+        <a href='https://github.com/xoxexxx' target='_blank'>
+          <img width={200} height={200} src={github} />
+          <h1>XOXEXXX</h1>
+        </a>
       </div>
       
     </>

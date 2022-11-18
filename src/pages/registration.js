@@ -43,9 +43,7 @@ export const Registration = () => {
         setResponse(res.data);
         setCurrentUser({...currentUser, isLoggedIn: true, currentUser: res.data.user})
         setToken(localStorage.setItem("token", response.user.token))
-        navigate('/')
-        
-        
+        navigate('/')        
       })
       .catch((err) => {
         setSumbit(false);

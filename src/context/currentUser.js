@@ -9,7 +9,7 @@ export const CurrentUserProvider = ({ children }) => {
         currentUser: null,
         tags: null,
         isError: null,
-        
+        method: null
     })
   return (
     <CurrentUserContext.Provider value={[state, setState]}>

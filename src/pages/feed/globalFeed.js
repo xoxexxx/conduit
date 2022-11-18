@@ -39,7 +39,8 @@ const GlobalFeed = () => {
     }).then((res) => {
       setArticles(res.data.articles);
       setCount(res.data.articlesCount);
-      setCurrentUser({ ...currentUser, isLoading: false, isError: false});
+      setCurrentUser({ ...currentUser, isLoading: false, isError: false, method: null});
+      setOffset(offset)
     }).catch(err => {
       setCurrentUser({
         ...currentUser,
@@ -63,7 +64,7 @@ const GlobalFeed = () => {
               </div>
             </div>
             <div>
-            <Liked favoriteCount={x.favoritesCount} slug={x.slug} isFavorited={x.favorited} />
+            <Liked x={x} />
             </div>
           </div>
           <div className="title">

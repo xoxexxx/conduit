@@ -3,6 +3,7 @@ import { useContext, Fragment } from "react";
 import { useNavigate } from 'react-router-dom';
 import { CurrentUserContext } from "../context/currentUser";
 
+import { Icon28DoorArrowRightOutline } from '@vkontakte/icons';
 import { Icon24WriteOutline } from "@vkontakte/icons";
 import { Icon24Settings } from "@vkontakte/icons";
 
@@ -15,7 +16,9 @@ export const TopBar = () => {
   const exit = () => {
     setCurrentUser({ ...currentUser, isLoggedIn: false });
     navigate('/');
+    localStorage.clear()
     window.location.reload()
+
     console.log('exit')
   };
   
@@ -59,7 +62,7 @@ export const TopBar = () => {
                   ><img src={currentUser.currentUser?.image} /> {currentUser.currentUser?.username}</NavLink>
                 </li>
                 <li onClick={exit} className="nav-exit">
-                  EXIT
+                  <Icon28DoorArrowRightOutline  />
                 </li>
               </Fragment>
             )}
