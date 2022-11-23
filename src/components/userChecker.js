@@ -11,13 +11,12 @@ export const UserChecker = ({ children }) => {
   const [currentUser, setCurrentUser] = useContext(CurrentUserContext);
 
   useEffect(() => {
-    
     if (!token) {
       setCurrentUser((state) => ({
         ...state,
-        isLoggedIn: false
-      }))
-      return
+        isLoggedIn: false,
+      }));
+      return;
     }
 
     axios("https://conduit.productionready.io/api/user/", {
@@ -32,25 +31,27 @@ export const UserChecker = ({ children }) => {
           ...state,
           isLoading: true,
           isError: false,
-          isLoggedIn: true
-        }))
+          isLoggedIn: true,
+          image: res.data.user.image,
+        }));
+        console.log(res.data);
       })
       .catch((err) => {
-          setCurrentUser({
-            ...currentUser,
-            isError: true
-          })
+        setCurrentUser({
+          ...currentUser,
+          isError: true,
+        });
       });
   }, [token]);
 
   useEffect(() => {
-    if (!response) return
+    if (!response) return;
     setCurrentUser((state) => ({
       ...state,
       isLoggedIn: true,
       isLoading: false,
-      currentUser: response.user
-    }))
-  }, [response, setCurrentUser])
+      currentUser: response.user,
+    }));
+  }, [response, setCurrentUser]);
   return children;
 };

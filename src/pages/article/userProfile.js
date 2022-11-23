@@ -1,13 +1,40 @@
-import { useContext,  useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { Icon16ArrowTriangleUp, Icon20Add } from "@vkontakte/icons";
+import { Icon20Cancel } from "@vkontakte/icons";
 import axios from "axios";
-import { CurrentUserContext } from "../../context/currentUser";
-
-import { Icon24Settings } from "@vkontakte/icons";
+import useLocalStorage from "../../hooks/useLocalStorage";
 import { Liked } from "../../components/liked";
 
-export const Profile = () => {
-  const [currentUser, setCurrentUser] = useContext(CurrentUserContext);
+
+export const UserProfile = () => {
+  const [currentUserz, setCurrentUserz] = useState({
+    username: "",
+    image: "",
+    following: "",
+    bio: "",
+  });
+  const [token, setToken] = useLocalStorage("token");
+  let url = document.location.hash.split("/").pop();
+  console.log(url);
+  useEffect(() => {
+    axios(`https://conduit.productionready.io/api/profiles/${url}`, {
+      method: "GET",
+      headers: {
+        Authorization: token ? `Token ${token}` : "",
+      },
+    }).then((res) => {
+      console.log(res.data);
+      setCurrentUserz({
+        ...currentUserz,
+        username: res.data.profile.username,
+        image: res.data.profile.image,
+        following: res.data.profile.following,
+        bio: res.data.profile.bio,
+      });
+    });
+  }, []);
+  
   const [feed, setFeed] = useState({ posts: true, favorited: false });
   const [offset, setOffset] = useState(0);
   const [currentPage, setCurrentPage] = useState(1);
@@ -30,31 +57,50 @@ export const Profile = () => {
   };
   useEffect(() => {
     if (!feed.posts) return
-    axios(`https://api.realworld.io/api/articles?author=${currentUser.currentUser.username}&limit=10&offset=${offset}`, {
+    axios(`https://api.realworld.io/api/articles?author=${currentUserz.username}&limit=10&offset=${offset}`, {
       method: 'GET'
     }).then(res => {
       setCount(res.data.articlesCount)
       setArticles(res.data.articles)
     })
-  }, [feed, offset, currentUser.username])
+  }, [feed, offset, currentUserz.username])
   useEffect(() => {
     if (feed.posts) return
-    axios(`https://api.realworld.io/api/articles?favorited=${currentUser.currentUser.username}&limit=10&offset=${offset}`, {
+    axios(`https://api.realworld.io/api/articles?favorited=${currentUserz.username}&limit=10&offset=${offset}`, {
       method: 'GET'
     }).then(res => {
       setCount(res.data.articlesCount)
       setArticles(res.data.articles)
     })
-  }, [feed, offset, currentUser.username])
+  }, [feed, offset, currentUserz.username])
+ 
+  const follow = () => {
+    console.log('click', currentUserz)
+    currentUserz.following ? setCurrentUserz({...currentUserz, following: false}) : setCurrentUserz({...currentUserz, following: Icon16ArrowTriangleUp})
+  }
+  useEffect(() => {
+    axios(`https://conduit.productionready.io/api/profiles/${currentUserz.username}/follow`, {
+      method: !currentUserz.following ? 'DELETE' : 'POST',
+      headers: {
+        Authorization: token ? `Token ${token}` : "",
+      }
+    }).then(res => {
+      
+    })
+  }, [currentUserz.following])
   return (
     <div className="profile-block">
       <div className="profile">
-        <img src={currentUser.currentUser.image} />
-        <h2>{currentUser.currentUser.username}</h2>
-        <Link to="/settings">
-        <Icon24Settings />
-        Edit Profile Settings
-      </Link>
+        <img src={currentUserz.image} />
+        <h2>{currentUserz.username}</h2>
+        <Link
+          onClick={follow}
+        className={currentUserz.following ? `unfollow` : ""}>
+          {!currentUserz.following && <Icon20Add />}{" "}
+          {!currentUserz.following && `Follow ${currentUserz.username}`}
+          {currentUserz.following && <Icon20Cancel />}
+          {currentUserz.following && `Unfollow ${currentUserz.username}`}
+        </Link>
       </div>
       <div className="Feeds">
         <ul>

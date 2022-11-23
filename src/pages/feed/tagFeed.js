@@ -14,7 +14,7 @@ const TagFeed = () => {
   const [offset, setOffset] = useState(0);
   const [token] = useLocalStorage("token");
   const [currentUser, setCurrentUser] = useContext(CurrentUserContext);
-  const [currentPage, setCurrentPage] = useState(0)
+  const [currentPage, setCurrentPage] = useState(0);
 
   const limit = Math.ceil(count / 10);
   let pagination = [];
@@ -24,27 +24,31 @@ const TagFeed = () => {
 
   const offsetHandle = (e) => {
     setOffset(e.target.innerText + "0");
-    setCurrentPage(+e.target.innerText)
+    setCurrentPage(+e.target.innerText);
   };
-  
+
   useEffect(() => {
     setCurrentUser({ ...currentUser, isLoading: true });
     document.title = "CONDUIT";
-    axios(`https://api.realworld.io/api/articles?tag=${currentUser.tags}&limit=10&offset=${offset}`, {
-      method: "GET",
-      headers: {
-        Authorization: token ? `Token ${token}` : "",
-      },
-    }).then((res) => {
-      setArticles(res.data.articles);
-      setCount(res.data.articlesCount);
-      setCurrentUser({ ...currentUser, isLoading: false, isError: false });
-    }).catch(err => {
-      setCurrentUser({ ...currentUser, isError: true });
-    })
+    axios(
+      `https://api.realworld.io/api/articles?tag=${currentUser.tags}&limit=10&offset=${offset}`,
+      {
+        method: "GET",
+        headers: {
+          Authorization: token ? `Token ${token}` : "",
+        },
+      }
+    )
+      .then((res) => {
+        setArticles(res.data.articles);
+        setCount(res.data.articlesCount);
+        setCurrentUser({ ...currentUser, isLoading: false, isError: false });
+      })
+      .catch((err) => {
+        setCurrentUser({ ...currentUser, isError: true });
+      });
   }, [currentUser.tags, offset]);
-  
-  
+
   return (
     <div className="GlobalFeed">
       {currentUser.isError && <Error />}

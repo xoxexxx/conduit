@@ -1,8 +1,5 @@
 const Article = () => {
-    
-    return(
-        <></>
-    )
-}
+  return <></>;
+};
 
-export default Article
+export default Article;

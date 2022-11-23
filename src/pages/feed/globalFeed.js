@@ -13,7 +13,7 @@ const GlobalFeed = () => {
   const [count, setCount] = useState(0);
   const [offset, setOffset] = useState(0);
   const [currentUser, setCurrentUser] = useContext(CurrentUserContext);
-  const [token] = useLocalStorage("token");
+  const [token, setToken] = useLocalStorage("token");
   const [currentPage, setCurrentPage] = useState(1);
 
   const limit = Math.ceil(count / 10);
@@ -64,12 +64,12 @@ const GlobalFeed = () => {
             <div>
               <img src={x.author.image} />
               <div>
-                <Link>{x.author.username}</Link>
+                <Link to={`profilez/${x.author.username}`}>{x.author.username}</Link>
                 <p className="data">{x.createdAt}</p>
               </div>
             </div>
             <div>
-              <Liked x={x}  />
+              <Liked x={x} />
             </div>
           </div>
           <div className="title">

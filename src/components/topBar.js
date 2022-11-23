@@ -1,27 +1,25 @@
-import { Link, NavLink, Navigate} from "react-router-dom";
+import { Link, NavLink, Navigate } from "react-router-dom";
 import { useContext, Fragment } from "react";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
 import { CurrentUserContext } from "../context/currentUser";
-
-import { Icon28DoorArrowRightOutline } from '@vkontakte/icons';
+import useLocalStorage from "../hooks/useLocalStorage";
+import { Icon28DoorArrowRightOutline } from "@vkontakte/icons";
 import { Icon24WriteOutline } from "@vkontakte/icons";
 import { Icon24Settings } from "@vkontakte/icons";
 
 export const TopBar = () => {
   const [currentUser, setCurrentUser] = useContext(CurrentUserContext);
-
+  const [token] = useLocalStorage("token");
   let navigate = useNavigate();
 
-  
   const exit = () => {
     setCurrentUser({ ...currentUser, isLoggedIn: false });
-    navigate('/');
-    localStorage.clear()
-    window.location.reload()
-
-    console.log('exit')
+    navigate("/");
+    localStorage.clear();
+    window.location.reload();
+    console.log("exit");
   };
-  
+  console.log(currentUser.isLoggedIn);
   return (
     <>
       <nav className="nav-bar">
@@ -57,12 +55,13 @@ export const TopBar = () => {
                   </NavLink>
                 </li>
                 <li className="nav">
-                  <NavLink
-                    to={`/profile/${currentUser.currentUser?.username}`}
-                  ><img src={currentUser.currentUser?.image} /> {currentUser.currentUser?.username}</NavLink>
+                  <NavLink to={`/profile/${currentUser.currentUser?.username}`}>
+                    <img src={currentUser.currentUser?.image} />{" "}
+                    {currentUser.currentUser?.username}
+                  </NavLink>
                 </li>
                 <li onClick={exit} className="nav-exit">
-                  <Icon28DoorArrowRightOutline  />
+                  <Icon28DoorArrowRightOutline />
                 </li>
               </Fragment>
             )}

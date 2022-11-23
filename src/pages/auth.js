@@ -7,14 +7,13 @@ import { BackendErrorMessages } from "./backendErrorMessages";
 import axios from "axios";
 
 export const Auth = (props) => {
-
   const [user, setUser] = useState({ email: "", password: "" });
   const [submit, setSumbit] = useState(false);
   const [response, setResponse] = useState(null);
   const [succsess, setSuccsess] = useState(false);
-  const [error, setError] = useState(null)
+  const [error, setError] = useState(null);
 
-  const [,setCurrentUser] = useContext(CurrentUserContext)
+  const [, setCurrentUser] = useContext(CurrentUserContext);
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -41,9 +40,8 @@ export const Auth = (props) => {
         setResponse(res.data);
       })
       .catch((err) => {
-        setError(err.response.data)
+        setError(err.response.data);
         setSumbit(false);
-        
       });
   }, [submit]);
 
@@ -51,12 +49,12 @@ export const Auth = (props) => {
     if (!response) return;
     localStorage.setItem("token", response.user.token);
     setSuccsess(true);
-    setCurrentUser(state => ({
+    setCurrentUser((state) => ({
       ...state,
       isLoggedIn: true,
       isLoading: false,
-      currentUser: response.user
-    }))
+      currentUser: response.user,
+    }));
   }, [response]);
   if (succsess) {
     return <Navigate to="/" />;
@@ -67,7 +65,11 @@ export const Auth = (props) => {
       <div className="auth">
         <h1>Sign in</h1>
         <Link to="/register">Need an account?</Link>
-        {error && <BackendErrorMessages backendErrors={error.errors}></BackendErrorMessages>}
+        {error && (
+          <BackendErrorMessages
+            backendErrors={error.errors}
+          ></BackendErrorMessages>
+        )}
         <form onSubmit={handleSubmit}>
           <fieldset>
             <input

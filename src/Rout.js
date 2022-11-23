@@ -9,6 +9,7 @@ import {Auth} from './pages/auth';
 import { CurrentUserContext } from './context/currentUser';
 import { Profile } from './pages/article/profile';
 import { Registration } from './pages/registration';
+import { UserProfile } from './pages/article/userProfile';
 
 
 
@@ -18,6 +19,7 @@ export default () => {
     if (currentUser.currentUser !== null) {
          username = currentUser.currentUser.username
     }
+
     return(
         <Routes>
             <Route path='/' element={<Feed />}  />
@@ -25,6 +27,7 @@ export default () => {
             <Route path='/register' element={<Registration />} />       
             <Route path='/editor' element={<Editor />} />
             <Route path={`/profile/${username}`} element={<Profile />}/>
+            <Route path={`/profilez/:slug`} element={<UserProfile />}/>
             <Route path='/settings' element={<Settings />} />
             <Route path='/articles/:slug' element={<Article />} />
         </Routes>
