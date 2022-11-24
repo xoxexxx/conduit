@@ -46,7 +46,7 @@ export const YourFeed = () => {
             <div>
               <img src={x.author.image} />
               <div>
-                <Link>{x.author.username}</Link>
+                <Link to={`profilez/${x.author.username}`}>{x.author.username}</Link>
                 <p className="data">{x.createdAt}</p>
               </div>
             </div>
@@ -55,7 +55,7 @@ export const YourFeed = () => {
             </div>
           </div>
           <div className="title">
-            <Link>
+            <Link to={`/articles/${x.slug}`}>
               <h2>{x.title} </h2>
               <p>{x.description}</p>
 

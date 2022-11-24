@@ -135,6 +135,7 @@ code {
   flex-direction: column;
   border: none;
   max-width: 800px;
+  min-width: 500px;
   margin: 50px auto;
 }
 .settings-form fieldset {
@@ -142,6 +143,7 @@ code {
   flex-direction: column;
   border: none;
   max-width: 500px;
+  min-width: 300px;
   margin: 50px auto;
 }
 .settings-form fieldset input {
@@ -263,6 +265,7 @@ code {
   display: flex;
   flex-direction: column;
   max-width: 1080px;
+  min-width: 800px;
   margin: 0px auto;
   padding: 20px 0;
   border-top: 1px solid rgba(0, 0, 0, 0.5);
@@ -410,6 +413,7 @@ code {
 }
 .Feeds {
   max-width: 1080px;
+  min-width: 800px;
   margin: 0 auto;
   flex: 1 0 auto;
 }
@@ -503,6 +507,7 @@ h3 {
   display: flex;
   justify-content: space-around;
   max-width: 1080px;
+  
   margin: 0 auto;
   padding: 15px 0;
   flex-wrap: wrap;
@@ -522,4 +527,95 @@ h3 {
 .footer div span a {
   color: white;
   text-decoration: underline;
+}
+.article {
+  background-color: rgba(0, 0, 0, 0.23);
+  padding: 20px 0; 
+}
+.article .user {
+  transform: scale(1.3);
+  padding: 10px;
+}
+.article div:first-child {
+   margin: 0 auto;
+   max-width: 880px;
+}
+.article div:first-child h2 {
+  font-size: 36px;
+}
+.art-body {
+  max-width: 1080px;
+  margin: 10px auto;
+  font-size: 14px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.art-body h3 {
+  padding-bottom: 30px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.6);
+}
+.art-body textarea {
+  margin-top: 40px;
+  padding: 20px;
+  outline: 0;
+  resize: vertical;
+}
+.art-body button {
+  padding: 5px 10px;
+  background-color: rgb(20, 100, 0);
+  color: white;
+  border: 1px solid rgba(0, 0, 0, 0.4);
+  border-radius: 10px;
+  font-weight: 800;
+  font-size: 14px;
+  cursor: pointer;
+}
+.art-body img {
+  border-radius: 50%;
+}
+.create-comment {
+  display: flex;
+  justify-content: space-between;
+  width: 510px;
+  padding: 10px 20px 20px 20px;
+  border-bottom-left-radius: 20px;
+  border-bottom-right-radius: 20px;
+  background-color: rgba(0, 0, 0, 0.1);
+  border: 1px solid rgba(0, 0, 0, 0.3);
+}
+.art-body ul li {
+  list-style: none;
+}
+
+.card {
+  width: 480px !important;
+  padding: 20px 0 20px 0;
+  border: 1px solid rgba(0, 0, 0, 0.3);
+  margin: 10px 0;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+}
+.card p {
+  margin: 0 15px 0 15px;
+  font-size: 16px;
+}
+.user-c-d {
+  display: flex;
+  justify-content: space-around;
+  padding: 10px 0 0 0;
+  margin: 10px 0 0 0;
+  border-top: 1px solid rgba(0, 0, 0, 0.3);
+}
+.card span {
+  margin-top: 17px;
+  font-size: 12px;
+  color: rgba(0, 0, 0, 0.4);
+}
+.card  img {
+  transform: translate(-20px, 10px);
+}
+.del {
+  cursor: pointer;
+  margin-top: 15px;
 }

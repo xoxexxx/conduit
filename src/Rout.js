@@ -11,15 +11,12 @@ import { Profile } from './pages/article/profile';
 import { Registration } from './pages/registration';
 import { UserProfile } from './pages/article/userProfile';
 
-
-
 export default () => {
     const [currentUser, setCurrentUser] = useContext(CurrentUserContext);
     let username
     if (currentUser.currentUser !== null) {
          username = currentUser.currentUser.username
     }
-
     return(
         <Routes>
             <Route path='/' element={<Feed />}  />

@@ -1,12 +1,13 @@
 import { useEffect, useState, useContext } from "react";
 import { Link, useParams } from "react-router-dom";
 
+import { Liked } from "../../components/liked";
 import { CurrentUserContext } from "../../context/currentUser";
 import { Error } from "../../components/error";
 import useLocalStorage from "../../hooks/useLocalStorage";
 
 import axios from "axios";
-import { Liked } from "../../components/liked";
+
 
 const GlobalFeed = () => {
   const [articles, setArticles] = useState([]);
@@ -64,7 +65,7 @@ const GlobalFeed = () => {
             <div>
               <img src={x.author.image} />
               <div>
-                <Link to={`profilez/${x.author.username}`}>{x.author.username}</Link>
+                <Link to={`profilez/${x.author.username}`} >{x.author.username}</Link>
                 <p className="data">{x.createdAt}</p>
               </div>
             </div>
@@ -73,7 +74,7 @@ const GlobalFeed = () => {
             </div>
           </div>
           <div className="title">
-            <Link>
+            <Link to={`/articles/${x.slug}`}>
               <h2>{x.title} </h2>
               <p>{x.description}</p>
 

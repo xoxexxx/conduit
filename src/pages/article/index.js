@@ -1,5 +1,156 @@
+import { useEffect, useState, useContext, createRef } from "react";
+import { useLocation, Link } from "react-router-dom";
+import useLocalStorage from "../../hooks/useLocalStorage";
+import { CurrentUserContext } from "../../context/currentUser";
+import { Liked } from "../../components/liked";
+import { Icon20DeleteOutline } from "@vkontakte/icons";
+import axios from "axios";
 const Article = () => {
-  return <></>;
+  const ref = createRef()
+  const location = useLocation();
+  const [token] = useLocalStorage("token");
+  const [currentUser] = useContext(CurrentUserContext);
+  const [article, setArticle] = useState({});
+  const [comments, setComments] = useState([]);
+  const [x, sx] = useState(false);
+  let id = 0
+  const [value, setValue] = useState("");
+  const [post, setPost] = useState(0);
+  const [deletes, setDeletes] = useState(0)
+  const addCommentHandler = (e) => {
+    e.preventDefault();
+    if (!value) return;
+    setPost(post => post + 1)
+  };
+  const deleteCommentHandler = () => {
+    
+    console.log(ref)
+  }
+  useEffect(() => {
+    sx(false);
+    axios(`https://conduit.productionready.io/api${location.pathname}`, {
+      method: "GET",
+      headers: {
+        Authorization: token ? `Token ${token}` : "",
+      },
+    }).then((res) => {
+      console.log(res.data.article);
+      setArticle(res.data.article);
+      sx(true);
+    });
+  }, []);
+  useEffect(() => {
+    axios(
+      `https://conduit.productionready.io/api${location.pathname}/comments`,
+      {
+        method: "GET",
+        headers: {
+          Authorization: token ? `Token ${token}` : "",
+        },
+      }
+    ).then((res) => {
+      setComments(res.data.comments);
+    });
+  }, []);
+  useEffect(() => {
+    axios(
+      `https://conduit.productionready.io/api${location.pathname}/comments`,
+      {
+        method: "POST",
+        headers: {
+          Authorization: token ? `Token ${token}` : "",
+        },
+        data: {
+          comment: {
+            body: value,
+          },
+        },
+      }
+    ).then((res) => {
+      
+    });
+  }, [post]);
+  useEffect(() => {
+    axios(`https://conduit.productionready.io/api${location.pathname}/comments/${id}`, {
+      method: 'DELETE',
+      headers: {
+        Authorization: token ? `Token ${token}` : "",
+      },
+    }).then(res => {
+
+    })
+  }, [])
+  return (
+    <>
+      {x && (
+        <>
+          <div className="article">
+            <div>
+              <div className="user">
+                <div>
+                  <img width="40" height="40" src={article?.author.image} />
+                  <div>
+                    <Link>{article?.author.username}</Link>
+                    <p className="data">{article?.createdAt}</p>
+                  </div>
+                  <Liked x={article} />
+                </div>
+              </div>
+              <h2>{article?.title}</h2>
+            </div>
+          </div>
+          <div className="art-body">
+            <h3>{article?.body}</h3>
+            {currentUser.isLoggedIn ? (
+              <div>
+                <textarea
+                  onChange={(e) => setValue(e.target.value)}
+                  value={value}
+                  placeholder="Write a comment"
+                  cols="70"
+                  rows="5"
+                ></textarea>
+                <div className="create-comment">
+                  <img
+                    width="40"
+                    height="40"
+                    src={currentUser.currentUser.image}
+                  />
+                  <button onClick={addCommentHandler}>Post Comment</button>
+                </div>
+              </div>
+            ) : (
+              <h4>
+                <Link to="/login">Sign in</Link> or{" "}
+                <Link to="/register">sign up</Link> to add comments on this
+                article.{" "}
+              </h4>
+            )}
+            {comments.map((x) => (
+              <div  className="card">
+                <p>{x.body}</p>
+                <div className="user-c-d">
+                  <div>
+                    <img width="30" height="30" src={x.author.image} />
+                    <Link
+                      to={
+                        x.author.username == currentUser.currentUser.username
+                          ? `/profile/${x.author.username}`
+                          : `/profilez/${x.author.username}`
+                      }
+                    >
+                      {x.author.username}
+                    </Link>
+                  </div>
+                  <span>{x.createdAt}</span>
+                </div>
+              </div>
+            ))}
+          </div>
+        </>
+      )}
+    </>
+  );
 };
 
 export default Article;
