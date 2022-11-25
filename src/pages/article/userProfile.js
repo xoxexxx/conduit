@@ -93,6 +93,7 @@ export const UserProfile = () => {
       <div className="profile">
         <img src={currentUserz.image} />
         <h2>{currentUserz.username}</h2>
+        <p>{currentUserz.bio}</p>
         <Link
           onClick={follow}
         className={currentUserz.following ? `unfollow` : ""}>

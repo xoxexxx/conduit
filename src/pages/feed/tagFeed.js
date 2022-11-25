@@ -14,11 +14,11 @@ const TagFeed = () => {
   const [offset, setOffset] = useState(0);
   const [token] = useLocalStorage("token");
   const [currentUser, setCurrentUser] = useContext(CurrentUserContext);
-  const [currentPage, setCurrentPage] = useState(0);
+  const [currentPage, setCurrentPage] = useState(1);
 
   const limit = Math.ceil(count / 10);
   let pagination = [];
-  for (let i = 0; i < limit; i++) {
+  for (let i = 1; i < limit; i++) {
     pagination.push(i);
   }
 
@@ -86,7 +86,7 @@ const TagFeed = () => {
       ))}
       <ul className="pagination">
         {pagination.map((p, i) => (
-          <li key={i} className={i === currentPage ? `activePag` : undefined}>
+          <li key={i} className={i + 1 === currentPage ? `activePag` : undefined}>
             <Link className="pag" onClick={offsetHandle}>
               {p}
             </Link>

@@ -37,7 +37,7 @@ export const PopularTags = ({ setFeed, feed }) => {
     <>
       {currentUser.isError && <Error />}
       <h2 className="popular-tags">Popular Tags</h2>
-      <div className="tags shadowTags">
+      <div className="tags Tags">
         <ul>
           {tags.map((x) => (
             <li key={x} onClick={tagsHandler}>
@@ -47,7 +47,7 @@ export const PopularTags = ({ setFeed, feed }) => {
         </ul>
         <a href="https://github.com/xoxexxx" target="_blank">
           <img width={200} height={200} src={github} />
-          <h1>XOXEXXX</h1>
+          <h1>#HELLO WORLD</h1>
         </a>
       </div>
     </>

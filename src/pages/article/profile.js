@@ -80,6 +80,7 @@ export const Profile = () => {
       <div className="profile">
         <img src={currentUser.currentUser.image} />
         <h2>{currentUser.currentUser.username}</h2>
+        <p>{currentUser.currentUser.bio}</p>
         <Link to="/settings">
           <Icon24Settings />
           Edit Profile Settings

@@ -18,9 +18,7 @@ export const TopBar = () => {
     localStorage.clear();
     window.location.reload();
   };
-  if (token !== '') {
-    setCurrentUser({...currentUser, isLoggedIn: true})
-  }
+ 
   return (
     <>
       <nav className="nav-bar">

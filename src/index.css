@@ -352,7 +352,7 @@ code {
   font-size: 12px;
   transition-duration: 0.5s;
 }
-.shadowTags ul li:last-child {
+.Tags ul li:last-child {
   margin-bottom: 50px;
 }
 .tags span {
@@ -446,38 +446,39 @@ code {
   color: rgba(0, 0, 0, 0.8);
   margin-top: 30px;
 }
-.shadowTags {
+.Tags {
   max-width: 650px !important;
   margin: 0 auto;
   cursor: pointer;
   display: flex;
   justify-content: space-between;
 }
-.shadowTags ul {
+.Tags ul {
   display: flex;
   flex-wrap: wrap;
   max-height: 100px;
   max-width: 300px;
 }
-.shadowTags ul li:hover {
+.Tags ul li:hover {
   color: white;
   background-color: rgba(0, 0, 0, 0.8);
 }
-.shadowTags ul li {
+.Tags ul li {
   color: rgba(0, 0, 0, 0.8);
   margin-top: 20px;
   height: 15px;
 }
-.shadowTags ul li a:hover {
+.Tags ul li a:hover {
   color: white;
 }
-.shadowTags img {
+.Tags img {
   transform: translate(10px, 0);
 }
-.shadowTags h1 {
+.Tags h1 {
   text-align: center;
   margin: 0;
   color: rgba(0, 0, 0, 0.9);
+  transform: translate(-20px, 0);
 }
 h3 {
   text-align: center;
