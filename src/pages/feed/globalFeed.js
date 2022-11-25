@@ -92,7 +92,7 @@ const GlobalFeed = () => {
       ))}
       <ul className="pagination">
         {pagination.map((p, i) => (
-          <li key={i} className={i + 1 === currentPage && `activePag`}>
+          <li key={i} className={i + 1 === currentPage ? `activePag` : undefined}>
             <Link className="pag" onClick={offsetHandle}>
               {p}
             </Link>

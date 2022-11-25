@@ -499,6 +499,7 @@ h3 {
 .footer {
   background-color: rgb(30, 100, 0);
   color: white;
+  margin-top: 120px;
   /* border-top-right-radius: 10%;
   border-top-left-radius: 10%; */
 }
@@ -507,7 +508,7 @@ h3 {
   display: flex;
   justify-content: space-around;
   max-width: 1080px;
-  
+  height: 70px;
   margin: 0 auto;
   padding: 15px 0;
   flex-wrap: wrap;

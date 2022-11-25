@@ -54,7 +54,6 @@ export const Settings = () => {
           email: settings.email,
         },
       });
-      console.log(currentUser);
       navigate("/");
     });
   }, [submit]);

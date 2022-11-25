@@ -6,6 +6,7 @@ import useLocalStorage from "../hooks/useLocalStorage";
 export const Liked = ({ x }) => {
   const [token] = useLocalStorage("token");
   const [currentUser, setCurrentUser] = useContext(CurrentUserContext);
+  const [card, setCard] = useState(x)
   const [response, setResponse] = useState({
     xz: true,
     isLikeCount: "",
@@ -14,10 +15,6 @@ export const Liked = ({ x }) => {
   });
   const handleLike = () => {
     setResponse({ ...response, xz: false });
-
-    setTimeout(() => {
-      window.location.reload();
-    }, 1000);
   };
 
   useEffect(() => {
@@ -35,12 +32,13 @@ export const Liked = ({ x }) => {
         isActive: res.data.article.favorited,
       });
       setCurrentUser({ ...currentUser, method: res.config.method });
+      setCard({...card, favorited: res.data.article.favorited, favoritesCount: res.data.article.favoritesCount})
     });
   }, [response]);
 
   return (
-    <div className={`like ${x.favorited && `favorite`} `} onClick={handleLike}>
-      <Icon16Like /> <span>{x.favoritesCount}</span>
+    <div className={`like ${card.favorited ? `favorite` : undefined} `} onClick={handleLike}>
+      <Icon16Like /> <span>{card.favoritesCount}</span>
     </div>
   );
 };

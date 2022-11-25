@@ -33,9 +33,9 @@ export const Feed = () => {
             className={feed.yourz ? "f-active" : ""}
           >
             {currentUser.isLoggedIn === false && (
-              <Link to="/login">Your Feed</Link>
+              <Link to="/login">Subscriptions Feed</Link>
             )}
-            {currentUser.isLoggedIn && <>Your Feed</>}
+            {currentUser.isLoggedIn && <>Subscriptions Feed</>}
           </li>
           <li
             onClick={globalFeedHandler}

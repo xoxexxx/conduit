@@ -26,6 +26,7 @@ export const YourFeed = () => {
     setCurrentPage(+e.target.innerText);
   };
   useEffect(() => {
+    setCurrentUser({ ...currentUser, isLoading: true, isError: false });
     axios(`https://conduit.productionready.io/api/articles/feed?limit=10&offset=${offset}`, {
       method: 'GET',
       headers: {
@@ -34,11 +35,21 @@ export const YourFeed = () => {
     }).then(res => {
       setCount(res.data.articlesCount)
       setFollowUserFeed(res.data.articles)
+      setCurrentUser({
+        ...currentUser,
+        isLoading: false,
+        isError: false,
+        method: null,
+      }).catch((err) => {
+        setCurrentUser({
+          ...currentUser,
+        });
+      });
     })
   }, [offset])
   return(<>
     <div className="GlobalFeed">
-      {currentUser.isError && <Error />}
+    {currentUser.isError && <Error />}
       {currentUser.isLoading && <div className="isLoading"></div>}
       {followUserFeed.map((x, index) => (
         <div className="feed" key={index}>
@@ -73,7 +84,7 @@ export const YourFeed = () => {
       ))}
       <ul className="pagination">
         {pagination.map((p, i) => (
-          <li key={i} className={i === currentPage && `activePag`}>
+          <li key={i} className={i === currentPage ? `activePag` : undefined}>
             <Link className="pag" onClick={offsetHandle}>
               {p}
             </Link>

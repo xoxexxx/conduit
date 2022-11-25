@@ -134,7 +134,7 @@ export const UserProfile = () => {
             </div>
           </div>
           <div className="title">
-            <Link>
+            <Link to={`/articles/${x.slug}`}>
               <h2>{x.title} </h2>
               <p>{x.description}</p>
 
@@ -167,7 +167,7 @@ export const UserProfile = () => {
             </div>
           </div>
           <div className="title">
-            <Link>
+            <Link to={`/articles/${x.slug}`}>
               <h2>{x.title} </h2>
               <p>{x.description}</p>
 
@@ -188,7 +188,7 @@ export const UserProfile = () => {
       </div>
       <ul className="pagination">
         {pagination.map((p, i) => (
-          <li key={i} className={i + 1 === currentPage && `activePag`}>
+          <li key={i} className={i + 1 === currentPage ? `activePag` : undefined}>
             <Link className="pag" onClick={offsetHandle}>
               {p}
             </Link>

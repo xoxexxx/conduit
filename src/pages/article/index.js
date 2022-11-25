@@ -5,11 +5,12 @@ import { CurrentUserContext } from "../../context/currentUser";
 import { Liked } from "../../components/liked";
 import { Icon20DeleteOutline } from "@vkontakte/icons";
 import axios from "axios";
+import { Error } from "../../components/error";
 const Article = () => {
   const ref = createRef()
   const location = useLocation();
   const [token] = useLocalStorage("token");
-  const [currentUser] = useContext(CurrentUserContext);
+  const [currentUser, setCurrentUser] = useContext(CurrentUserContext);
   const [article, setArticle] = useState({});
   const [comments, setComments] = useState([]);
   const [x, sx] = useState(false);
@@ -23,10 +24,10 @@ const Article = () => {
     setPost(post => post + 1)
   };
   const deleteCommentHandler = () => {
-    
-    console.log(ref)
+  
   }
   useEffect(() => {
+    setCurrentUser({ ...currentUser, isLoading: true, isError: false });
     sx(false);
     axios(`https://conduit.productionready.io/api${location.pathname}`, {
       method: "GET",
@@ -34,7 +35,12 @@ const Article = () => {
         Authorization: token ? `Token ${token}` : "",
       },
     }).then((res) => {
-      console.log(res.data.article);
+      setCurrentUser({
+        ...currentUser,
+        isLoading: false,
+        isError: false,
+        method: null,
+      });
       setArticle(res.data.article);
       sx(true);
     });
@@ -82,7 +88,10 @@ const Article = () => {
   }, [])
   return (
     <>
+    {currentUser.isError && <Error />}
+        {currentUser.isLoading && <div className="isLoading"></div>}
       {x && (
+        
         <>
           <div className="article">
             <div>
@@ -93,7 +102,6 @@ const Article = () => {
                     <Link>{article?.author.username}</Link>
                     <p className="data">{article?.createdAt}</p>
                   </div>
-                  <Liked x={article} />
                 </div>
               </div>
               <h2>{article?.title}</h2>

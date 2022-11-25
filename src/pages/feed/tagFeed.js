@@ -86,7 +86,7 @@ const TagFeed = () => {
       ))}
       <ul className="pagination">
         {pagination.map((p, i) => (
-          <li key={i} className={i === currentPage && `activePag`}>
+          <li key={i} className={i === currentPage ? `activePag` : undefined}>
             <Link className="pag" onClick={offsetHandle}>
               {p}
             </Link>

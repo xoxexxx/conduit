@@ -14,7 +14,7 @@ export const UserChecker = ({ children }) => {
     if (!token) {
       setCurrentUser((state) => ({
         ...state,
-        isLoggedIn: false,
+        isLoggedIn: token ? true : false,
       }));
       return;
     }
@@ -34,7 +34,6 @@ export const UserChecker = ({ children }) => {
           isLoggedIn: true,
           image: res.data.user.image,
         }));
-        console.log(res.data);
       })
       .catch((err) => {
         setCurrentUser({
