@@ -44,9 +44,9 @@ const TagFeed = () => {
         setCount(res.data.articlesCount);
         setCurrentUser({ ...currentUser, isLoading: false, isError: false });
       })
-      .catch((err) => {
-        setCurrentUser({ ...currentUser, isError: true });
-      });
+      .catch(err => {
+        console.log(err.message)
+      })
   }, [currentUser.tags, offset]);
 
   return (
@@ -57,7 +57,7 @@ const TagFeed = () => {
         <div className="feed" key={index}>
           <div className="user">
             <div>
-              <img src={x.author.image} />
+              <img width='35' height='35' src={x.author.image} />
               <div>
                 <Link to={`profilez/${x.author.username}`}>{x.author.username}</Link>
                 <p className="data">{x.createdAt}</p>

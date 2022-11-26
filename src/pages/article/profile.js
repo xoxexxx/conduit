@@ -50,7 +50,10 @@ export const Profile = () => {
         isError: false,
         method: null,
       });
-    });
+    })
+    .catch(err => {
+      console.log(err.message)
+    })
   }, [feed, offset, currentUser.username]);
   useEffect(() => {
     if (feed.posts) return;
@@ -110,9 +113,9 @@ export const Profile = () => {
                 <div className="feed" key={index}>
                   <div className="user">
                     <div>
-                      <img src={x.author.image} />
+                      <img width='35' height='35' src={x.author.image} />
                       <div>
-                        <Link to={`profilez/${x.author.username}`}>
+                        <Link>
                           {x.author.username}
                         </Link>
                         <p className="data">{x.createdAt}</p>
@@ -149,9 +152,9 @@ export const Profile = () => {
                 <div className="feed" key={index}>
                   <div className="user">
                     <div>
-                      <img src={x.author.image} />
+                      <img width='35' height='35' src={x.author.image} />
                       <div>
-                        <Link to={`profilez/${x.author.username}`}>
+                        <Link>
                           {x.author.username}
                         </Link>
                         <p className="data">{x.createdAt}</p>

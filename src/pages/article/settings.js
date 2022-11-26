@@ -53,9 +53,12 @@ export const Settings = () => {
           image: settings.image,
           email: settings.email,
         },
-      });
+      })
       navigate("/");
-    });
+    })
+    .catch(err => {
+      console.log(err.message)
+    })
   }, [submit]);
 
   return (

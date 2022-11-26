@@ -391,8 +391,10 @@ code {
   border: 16px solid #f3f3f3;
   border-top: 16px solid #00000085;
   border-radius: 50%;
-  width: 120px;
-  height: 120px;
+  min-width: 100px !important;
+  min-height: 100px !important;
+  max-width: 100px !important;
+  max-height: 100px !important;
   animation: spin 1s linear infinite;
   margin: 100px auto;
 }
@@ -620,4 +622,10 @@ h3 {
 .del {
   cursor: pointer;
   margin-top: 15px;
+}
+.deletePost {
+  margin: 20px auto;
+  transform: scale(2);
+  color: brown;
+  cursor: pointer;
 }

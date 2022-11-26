@@ -63,6 +63,9 @@ export const UserProfile = () => {
       setCount(res.data.articlesCount)
       setArticles(res.data.articles)
     })
+    .catch(err => {
+      console.log(err.message)
+    })
   }, [feed, offset, currentUserz.username])
   useEffect(() => {
     if (feed.posts) return
@@ -71,6 +74,9 @@ export const UserProfile = () => {
     }).then(res => {
       setCount(res.data.articlesCount)
       setArticles(res.data.articles)
+    })
+    .catch(err => {
+      console.log(err.message)
     })
   }, [feed, offset, currentUserz.username])
  
@@ -87,11 +93,14 @@ export const UserProfile = () => {
     }).then(res => {
       
     })
+    .catch(err => {
+      console.log(err.message)
+    })
   }, [currentUserz.following])
   return (
     <div className="profile-block">
       <div className="profile">
-        <img src={currentUserz.image} />
+        <img width='65' height='65' src={currentUserz.image} />
         <h2>{currentUserz.username}</h2>
         <p>{currentUserz.bio}</p>
         <Link
@@ -124,9 +133,9 @@ export const UserProfile = () => {
         <div className="feed" key={index}>
           <div className="user">
             <div>
-              <img src={x.author.image} />
+              <img width='35' height='35' src={x.author.image} />
               <div>
-                <Link to={`profilez/${x.author.username}`}>{x.author.username}</Link>
+                <Link>{x.author.username}</Link>
                 <p className="data">{x.createdAt}</p>
               </div>
             </div>
@@ -157,9 +166,9 @@ export const UserProfile = () => {
         <div className="feed" key={index}>
           <div className="user">
             <div>
-              <img src={x.author.image} />
+              <img width='35' height='35' src={x.author.image} />
               <div>
-                <Link to={`profilez/${x.author.username}`}>{x.author.username}</Link>
+                <Link>{x.author.username}</Link>
                 <p className="data">{x.createdAt}</p>
               </div>
             </div>

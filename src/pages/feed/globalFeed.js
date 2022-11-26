@@ -48,22 +48,19 @@ const GlobalFeed = () => {
         });
         setOffset(offset);
       })
-      .catch((err) => {
-        setCurrentUser({
-          ...currentUser,
-        });
-      });
+      .catch(err => {
+        console.log(err.message)
+      })
   }, [offset]);
 
   return (
     <div className="GlobalFeed">
-      {currentUser.isError && <Error />}
       {currentUser.isLoading && <div className="isLoading"></div>}
       {articles.map((x, index) => (
         <div className="feed" key={index}>
           <div className="user">
             <div>
-              <img src={x.author.image} />
+              <img width='35' height='35' src={x.author.image} />
               <div>
                 <Link to={`profilez/${x.author.username}`} >{x.author.username}</Link>
                 <p className="data">{x.createdAt}</p>
