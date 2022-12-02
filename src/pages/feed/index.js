@@ -13,7 +13,7 @@ export const Feed = () => {
   const [feed, setFeed] = useState({ yourz: false, globalz: true, tag: false });
   const [currentUser, setCurrentUser] = useContext(CurrentUserContext);
   const [token] = useLocalStorage("token");
-
+  
   const yourFeedHandler = () => {
     setFeed({ ...feed, yourz: true, globalz: false, tag: false });
   };

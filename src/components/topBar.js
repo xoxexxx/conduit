@@ -11,14 +11,15 @@ export const TopBar = () => {
   const [currentUser, setCurrentUser] = useContext(CurrentUserContext);
   const [token] = useLocalStorage("token");
   let navigate = useNavigate();
-
+  
+  
   const exit = () => {
     setCurrentUser({ ...currentUser, isLoggedIn: false });
     navigate("/");
     localStorage.clear();
     window.location.reload();
   };
- 
+  
   return (
     <>
       <nav className="nav-bar">
